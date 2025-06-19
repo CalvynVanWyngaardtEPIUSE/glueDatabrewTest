@@ -1,0 +1,39 @@
+{
+  "name" : "Glue v DataBrew",
+  "jobMode" : "VISUAL",
+  "description" : "",
+  "role" : "arn:aws:iam::975050360782:role/Glue-S3",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-975050360782-eu-north-1/scripts/Glue v DataBrew.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-975050360782-eu-north-1/sparkHistoryLogs/",
+    "--enable-job-insights" : "true",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-975050360782-eu-north-1/temporary/"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 10,
+  "timeout" : 480,
+  "maxCapacity" : 10.0,
+  "glueVersion" : "5.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.1X",
+  "codeGenConfigurationNodes" : "{\"node-1749626043748\":{\"Join\":{\"Columns\":[{\"From\":\"node-1749581168380\",\"Keys\":[[\"employee_id\"]]},{\"From\":\"node-1749626048286\",\"Keys\":[[\"employee_id\"]]}],\"Inputs\":[\"node-1749581168380\",\"node-1749626048286\"],\"JoinType\":\"left\",\"Name\":\"Lookup ID\"}},\"node-1749626048286\":{\"S3CsvSource\":{\"AdditionalOptions\":{\"EnableSamplePath\":false,\"SamplePath\":\"s3://aws-glue-assets-975050360782-eu-north-1/datasets/gluedatasets/ID_Lookup.csv\"},\"Escaper\":\"\",\"Exclusions\":[],\"Name\":\"ID Lookup\",\"OptimizePerformance\":false,\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"employee_id\",\"Type\":\"string\"},{\"Name\":\"emp-id\",\"Type\":\"string\"}]}],\"Paths\":[\"s3://aws-glue-assets-975050360782-eu-north-1/datasets/gluedatasets/ID_Lookup.csv\"],\"QuoteChar\":\"quote\",\"Recurse\":true,\"Separator\":\"comma\",\"WithHeader\":true}},\"node-1749581168380\":{\"S3CsvSource\":{\"AdditionalOptions\":{\"EnableSamplePath\":false,\"SamplePath\":\"s3://aws-glue-assets-975050360782-eu-north-1/datasets/gluedatasets/JOB_Data.csv\"},\"Escaper\":\"\",\"Exclusions\":[],\"Name\":\"JOB Data\",\"OptimizePerformance\":false,\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"employee_id\",\"Type\":\"string\"},{\"Name\":\"job_id\",\"Type\":\"string\"},{\"Name\":\"salary\",\"Type\":\"string\"},{\"Name\":\"commission_pct\",\"Type\":\"string\"},{\"Name\":\"hire_date\",\"Type\":\"string\"},{\"Name\":\"manager_id\",\"Type\":\"string\"},{\"Name\":\"department_id\",\"Type\":\"string\"}]}],\"Paths\":[\"s3://aws-glue-assets-975050360782-eu-north-1/datasets/gluedatasets/JOB_Data.csv\"],\"QuoteChar\":\"quote\",\"Recurse\":true,\"Separator\":\"comma\",\"WithHeader\":true}},\"node-1749626143152\":{\"S3CsvSource\":{\"AdditionalOptions\":{\"EnableSamplePath\":false,\"SamplePath\":\"s3://aws-glue-assets-975050360782-eu-north-1/datasets/gluedatasets/Department_lookup.csv\"},\"Escaper\":\"\",\"Exclusions\":[],\"Name\":\"Department Lookup\",\"OptimizePerformance\":false,\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"department_id\",\"Type\":\"string\"},{\"Name\":\"department\",\"Type\":\"string\"}]}],\"Paths\":[\"s3://aws-glue-assets-975050360782-eu-north-1/datasets/gluedatasets/Department_lookup.csv\"],\"QuoteChar\":\"quote\",\"Recurse\":true,\"Separator\":\"comma\",\"WithHeader\":true}},\"node-1749633962150\":{\"Join\":{\"Columns\":[{\"From\":\"node-1749626043748\",\"Keys\":[[\"department_id\"]]},{\"From\":\"node-1749626143152\",\"Keys\":[[\"department_id\"]]}],\"Inputs\":[\"node-1749626043748\",\"node-1749626143152\"],\"JoinType\":\"left\",\"Name\":\"Lookup Department\"}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "glueDatabrewTest",
+    "branch" : "dev",
+    "folder" : "Glue v DataBrew"
+  }
+}
